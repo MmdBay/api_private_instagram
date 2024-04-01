@@ -4,9 +4,9 @@ import Wizgeram from '../../modules/userPageData.module';
 
 @Injectable()
 export class UserService {
-    async userFeed(): Promise<any> {
-     const wiz = new Wizgeram('bmw');
-    const data = await wiz.userFeed();
-    return { data };
- }
+    async userMain(userName: string, sessionName: string): Promise<any> {
+        const wiz = new Wizgeram(userName, sessionName);
+        const data = await wiz.userInfo();
+        return { data };
+    }
 }

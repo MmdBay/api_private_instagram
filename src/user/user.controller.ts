@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { UserService } from './user.service';
 
-@Controller('suren/api/v1/user')
+@Controller('suren/v1/user')
 export class UserController {
- constructor(private readonly userService: UserService) {}
+   constructor(private readonly userService: UserService) { }
 
- @Get()
- async user() {
-    return this.userService.userFeed();
- }
+   @Post('info')
+   async user(@Body("session_name") sessionName: string, @Body("username") userName: string) {
+      return this.userService.userMain(userName, sessionName);
+   }
 }

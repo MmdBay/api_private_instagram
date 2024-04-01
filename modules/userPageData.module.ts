@@ -2,27 +2,29 @@ import loadSession from "./loadSession.module"
 import ig from "./craetClient.module"
 
 class Wizgeram {
-    private userName: string
+    private readonly userName: string
+    private readonly sessionName: string
 
-    constructor(userName: string) {
-        this.userName = userName
+    constructor(userName: string, sessionName: string) {
+        this.userName = userName,
+        this.sessionName = sessionName
     }
-
-    async userFeed(): Promise<object | undefined> {
+    
+    async userInfo(): Promise<object | undefined> {
         try {
-            await loadSession()
-            const userAccount: any = await ig.user.info(ig.state.cookieUserId)
+            await loadSession(this.sessionName)
+            await ig.user.info(ig.state.cookieUserId)
+            const userAccount: any = ig.user.usernameinfo(this.userName)
+            
             return userAccount
         } catch (e) {
-            console.error('ERROR Wizgeram Class & user method: '+ e)
+            console.error('ERROR Wizgeram Class & userInfo method: '+ e)
         }
     }
-
+    
     async userData(): Promise<object | undefined> {
         try {
-            const session = await loadSession()
-            console.log(session);
-            
+            await loadSession(this.sessionName)            
             const userInfo = await ig.user.info(this.userName);
             const userId = userInfo.pk;
             const detailedUserInfo = await ig.user.info(userId);

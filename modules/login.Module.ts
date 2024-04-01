@@ -2,15 +2,16 @@ import ig from './craetClient.module';
 import * as path from 'path';
 import { promises as fsPromises } from 'fs';
 
-async function loginToInsta(username: string, password: string) {
-    ig.state.generateDevice(username);
+async function loginToInsta(userName: string, password: string) {
+  console.log(userName, password);
   
-    await ig.account.login(username, password);
+    ig.state.generateDevice(userName);
+  
+    await ig.account.login(userName, password);
     
     const serialized = await ig.state.serialize();
-    console.log(serialized);
-    await fsPromises.writeFile(path.resolve(__dirname, 'session.json'), JSON.stringify(serialized));
-    console.log(path.resolve(__dirname, 'session.json'))
+    await fsPromises.writeFile(path.resolve(__dirname, `session_${userName}.json`), JSON.stringify(serialized));
+    console.log(path.resolve(__dirname, `session_${userName}.json`))
     
   }
 
