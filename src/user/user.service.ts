@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import Wizgeram from '../../modules/userPageData.module';
-
+import { WizgeramService } from 'src/insta/wizgeram.service';
 
 @Injectable()
 export class UserService {
-    async userMain(userName: string, sessionName: string): Promise<any> {
-        const wiz = new Wizgeram(userName, sessionName);
-        const data = await wiz.userInfo();
-        return { data };
-    }
+  constructor(private readonly wizgeramService: WizgeramService) {}
+  async userMain(userName: string, sessionName: string): Promise<any> {
+    const data = await this.wizgeramService.userInfo(userName, sessionName);
+    return { data };
+  }
 }
