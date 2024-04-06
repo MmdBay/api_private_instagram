@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { LoginService } from './login.service';
 
-@Controller('suren/v1/auth')
+@Controller('auth')
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
